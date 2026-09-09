@@ -24,6 +24,7 @@ from PIL import Image
 
 CHALLENGE_PEAK_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/challenge-peak.json"
 MONSTERS_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/monsters.json"
+STAGES_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/stages.json"
 TEXTMAPS_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/textmaps.json"
 
 CHALLENGE_PEAKS_PATH = os.path.join("index_new", "en", "challenge_peaks.json")
@@ -140,13 +141,23 @@ def build_monsters_by_wave(spawn_config: list, monster_level: int) -> list:
     return waves
 
 
-def build_peak_entry(peak: dict, textmap_en: dict) -> dict:
+def build_peak_entry(peak: dict, textmap_en: dict, stages_api: dict) -> dict:
     monster_level = peak["monster_level"]
     monsters_by_wave = build_monsters_by_wave(peak["spawn_config"], monster_level)
 
     blessings_raw = peak.get("monster_tag_maze_buffs") or []
     blessings_display = resolve_buffs(blessings_raw, textmap_en)
     battle_blessings = [{"level": 1, "id": b["id"]} for b in blessings_raw]
+
+    # A stage can carry its own "invasion" buff (unrelated to the peak's own
+    # monster_tag_maze_buffs) — if present, it's included in the battle
+    # config the same way, at level 1.
+    stage = stages_api.get(str(peak["stage_id"]))
+    invasion_config = stage.get("invasion_config") if stage else None
+    if invasion_config:
+        maze_buff_id = invasion_config.get("maze_buff_id")
+        if maze_buff_id is not None:
+            battle_blessings.append({"level": 1, "id": maze_buff_id})
 
     is_boss = bool(peak.get("is_boss"))
     boss_buffs = resolve_buffs(peak.get("boss_maze_buffs") or [], textmap_en) if is_boss else []
@@ -222,6 +233,12 @@ def main():
     textmaps = fetch_json(TEXTMAPS_URL)
     textmap_en = textmaps.get("EN", {})
 
+    # Downloaded once as an in-memory lookup only — used to check
+    # invasion_config for the specific stage ids our peaks reference. Not
+    # persisted as its own local file; nothing here needs the other
+    # thousands of unrelated stages.
+    stages_api = fetch_json(STAGES_URL)
+
     challenge_peaks = load_json_or_empty(CHALLENGE_PEAKS_PATH)
     monsters_registry = load_json_or_empty(MONSTERS_PATH)
 
@@ -247,7 +264,7 @@ def main():
         challenge_peaks[gid] = {
             "id": group["id"],
             "name": display_name,
-            "peaks": [build_peak_entry(peak, textmap_en) for peak in group["peaks"]],
+            "peaks": [build_peak_entry(peak, textmap_en, stages_api) for peak in group["peaks"]],
         }
         referenced_monster_ids |= collect_monster_ids(group)
         added.append(f"{display_name} ({gid})")
