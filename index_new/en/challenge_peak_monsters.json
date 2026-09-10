@@ -166,5 +166,14 @@
     },
     "501301002": {
         "icon": "icon/monster/501301002.png"
+    },
+    "200401404": {
+        "icon": "icon/monster/200401404.png"
+    },
+    "203401404": {
+        "icon": "icon/monster/203401404.png"
+    },
+    "406401204": {
+        "icon": "icon/monster/406401204.png"
     }
 }
