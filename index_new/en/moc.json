@@ -1,0 +1,262 @@
+{
+    "1036": {
+        "id": 1036,
+        "name": "Survival of the Fittest",
+        "begin_time": "2026-08-24 04:00:00",
+        "end_time": "2026-09-25 04:00:00",
+        "turbulence": {
+            "id": 3030149,
+            "description": "When an ally target uses their Ultimate, they gain 5 Punchlines.\\nAt the start of each Cycle, Aha immediately gains 1 extra turn with a fixed 20 Punchlines taken into account. This turn does not consume Punchlines."
+        },
+        "nodes": [
+            {
+                "name": "Node 1",
+                "stage_id": 30126121,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030149
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 5013010,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 800304016,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 2034010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30126121,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            },
+            {
+                "name": "Node 2",
+                "stage_id": 30126122,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030149
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 402302001,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 402301001,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 5034010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30126122,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            },
+            {
+                "name": "Node 3",
+                "stage_id": 30126123,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030149
+                        },
+                        {
+                            "level": 1,
+                            "id": 3034003
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 2023030,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 4053010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 5024010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30126123,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            }
+        ]
+    },
+    "1035": {
+        "id": 1035,
+        "name": "Crossing the Afterlife",
+        "begin_time": "2026-08-24 03:59:59",
+        "end_time": "2026-09-25 04:00:00",
+        "turbulence": {
+            "id": 3030148,
+            "description": "The first character in the ally lineup gains the Elation Skill \"Euphoric Maelstrom,\" dealing 100% Elation DMG of the character's Type to all enemies.\\nAt the start of each cycle, Aha immediately gains 1 extra turn, taking into account a fixed 20 Punchlines. This turn does not consume Punchlines."
+        },
+        "nodes": [
+            {
+                "name": "Node 1",
+                "stage_id": 30125121,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030148
+                        },
+                        {
+                            "level": 1,
+                            "id": 3034003
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 5013060,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 8003010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 5014010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30125121,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            },
+            {
+                "name": "Node 2",
+                "stage_id": 30125122,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030148
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 1003010,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 2023030,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 4044010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30125122,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            },
+            {
+                "name": "Node 3",
+                "stage_id": 30125123,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030148
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 5013040,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 3003050,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 5014030,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30125123,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            }
+        ]
+    }
+}

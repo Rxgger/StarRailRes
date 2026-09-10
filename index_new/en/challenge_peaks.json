@@ -1,0 +1,467 @@
+{
+    "10": {
+        "id": 10,
+        "name": "Return to Roots",
+        "peaks": [
+            {
+                "peak_id": 1001,
+                "name": "Knight (I)",
+                "stage_id": 30510011,
+                "monster_level": 95,
+                "is_boss": false,
+                "blessings": [
+                    {
+                        "id": 3033058,
+                        "name": "Hemovore",
+                        "description": "At the start of ally targets' turns, they lose 500 HP. This effect can be fatal."
+                    }
+                ],
+                "boss_buffs": [],
+                "battle_config": {
+                    "battle_type": "DEFAULT",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3033058
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 5023010,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 5013040,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 5014020,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30510011,
+                    "path_resonance_id": 0,
+                    "cycle_count": 0
+                }
+            },
+            {
+                "peak_id": 1002,
+                "name": "Knight (II)",
+                "stage_id": 30510012,
+                "monster_level": 95,
+                "is_boss": false,
+                "blessings": [
+                    {
+                        "id": 3033042,
+                        "name": "Confinement+",
+                        "description": "Ally targets initially obtain 2 stack(s) of this effect, with each stack decreasing their own DMG by 20%. This effect cannot be dispelled, and 1 stack is removed after each Ultimate used."
+                    },
+                    {
+                        "id": 3033069,
+                        "name": "Enrage",
+                        "description": "After each time an ally target uses their Ultimate, applies 1 stack of this effect to all enemy targets. Each stack increases the enemy target's SPD by 30%, up to a max of 4 stack(s). All stacks of this effect are cleared at the start of the enemy target's turn."
+                    }
+                ],
+                "boss_buffs": [],
+                "battle_config": {
+                    "battle_type": "DEFAULT",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3033042
+                        },
+                        {
+                            "level": 1,
+                            "id": 3033069
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 5013050,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 5013070,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 4014030,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30510012,
+                    "path_resonance_id": 0,
+                    "cycle_count": 0
+                }
+            },
+            {
+                "peak_id": 1003,
+                "name": "Knight (III)",
+                "stage_id": 30510013,
+                "monster_level": 95,
+                "is_boss": false,
+                "blessings": [
+                    {
+                        "id": 3033076,
+                        "name": "Lockdown",
+                        "description": "After each time an ally target uses an attack, applies 1 stack of this effect. Upon reaching 6 stack(s), causes the target to enter the \"Imprisonment\" state for 1 turn and reduces their Energy by a fixed amount of 30%. All stacks of this effect are cleared at the start of the target's turn or after a debuff is triggered."
+                    }
+                ],
+                "boss_buffs": [],
+                "battle_config": {
+                    "battle_type": "DEFAULT",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3033076
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 4053020,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 2023020,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 3024030,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30510013,
+                    "path_resonance_id": 0,
+                    "cycle_count": 0
+                }
+            },
+            {
+                "peak_id": 1004,
+                "name": "King in Check",
+                "stage_id": 30510021,
+                "monster_level": 100,
+                "is_boss": true,
+                "blessings": [
+                    {
+                        "id": 3033058,
+                        "name": "Hemovore",
+                        "description": "At the start of ally targets' turns, they lose 500 HP. This effect can be fatal."
+                    },
+                    {
+                        "id": 3033078,
+                        "name": "Perforation",
+                        "description": "When an enemy target uses an attack, if the attacked ally target has a Shield, increases the DMG dealt by the enemy target by 200%."
+                    }
+                ],
+                "boss_buffs": [
+                    {
+                        "id": 3033082,
+                        "name": "Ecstasy Night",
+                        "description": "Merrymakes Elation DMG dealt by the first character in the lineup by 50%."
+                    },
+                    {
+                        "id": 3033083,
+                        "name": "Navigator's Oath",
+                        "description": "Increases the All-Type RES PEN for the Skill DMG and Ultimate DMG dealt by the character in position 1 in the lineup by 50%."
+                    },
+                    {
+                        "id": 3033084,
+                        "name": "Endocytosis",
+                        "description": "\"Homeostatic Imbalance\" increases DMG dealt to \"Blood-Brain Barrier\" by 50%."
+                    }
+                ],
+                "battle_config": {
+                    "battle_type": "DEFAULT",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3033058
+                        },
+                        {
+                            "level": 1,
+                            "id": 3033078
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 402302001,
+                                "amount": 1,
+                                "level": 100
+                            },
+                            {
+                                "monster_id": 8033020,
+                                "amount": 1,
+                                "level": 100
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 503401002,
+                                "amount": 1,
+                                "level": 100
+                            }
+                        ]
+                    ],
+                    "stage_id": 30510021,
+                    "path_resonance_id": 0,
+                    "cycle_count": 0
+                }
+            }
+        ]
+    },
+    "9": {
+        "id": 9,
+        "name": "Return of the Legion",
+        "peaks": [
+            {
+                "peak_id": 901,
+                "name": "Knight (I)",
+                "stage_id": 30509011,
+                "monster_level": 95,
+                "is_boss": false,
+                "blessings": [
+                    {
+                        "id": 3033088,
+                        "name": "Unwavering",
+                        "description": "Enemy targets' Toughness cannot be reduced, and Break DMG taken is reduced by 50%."
+                    },
+                    {
+                        "id": 3033071,
+                        "name": "Scales",
+                        "description": "Enemy targets initially have 20 stacks of this effect. Each stack reduces enemy targets' DMG taken by 2%. Enemy targets lose 1 stack each time they are attacked. Stacks of this effect will reset during boss enemy phase transitions."
+                    }
+                ],
+                "boss_buffs": [],
+                "battle_config": {
+                    "battle_type": "DEFAULT",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3033088
+                        },
+                        {
+                            "level": 1,
+                            "id": 3033071
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 8033020,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 800304016,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 8033020,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 100401014,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30509011,
+                    "path_resonance_id": 0,
+                    "cycle_count": 0
+                }
+            },
+            {
+                "peak_id": 902,
+                "name": "Knight (II)",
+                "stage_id": 30509012,
+                "monster_level": 95,
+                "is_boss": false,
+                "blessings": [
+                    {
+                        "id": 3033063,
+                        "name": "Flow Break",
+                        "description": "Each time after an enemy target is attacked by allies, DMG taken by them decreases by 2% and CRIT DMG taken decreases by 4%, stacking up to 10 time(s). This effect changes to decreasing by 5 stack(s) after the enemy target receives a Follow-Up ATK or when Aha Instant ends."
+                    }
+                ],
+                "boss_buffs": [],
+                "battle_config": {
+                    "battle_type": "DEFAULT",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3033063
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 5023010,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 5013010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 5014010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30509012,
+                    "path_resonance_id": 0,
+                    "cycle_count": 0
+                }
+            },
+            {
+                "peak_id": 903,
+                "name": "Knight (III)",
+                "stage_id": 30509013,
+                "monster_level": 95,
+                "is_boss": false,
+                "blessings": [
+                    {
+                        "id": 3033085,
+                        "name": "Joint Forces",
+                        "description": "DMG taken by enemy targets is reduced by 60%. When there are more than 4 ally targets currently on the field, this effect is reduced by 20% for each additional target."
+                    }
+                ],
+                "boss_buffs": [],
+                "battle_config": {
+                    "battle_type": "DEFAULT",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3033085
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 4013010,
+                                "amount": 2,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 8003020,
+                                "amount": 2,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 4034010,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30509013,
+                    "path_resonance_id": 0,
+                    "cycle_count": 0
+                }
+            },
+            {
+                "peak_id": 904,
+                "name": "King in Check",
+                "stage_id": 30509021,
+                "monster_level": 100,
+                "is_boss": true,
+                "blessings": [
+                    {
+                        "id": 3033058,
+                        "name": "Hemovore",
+                        "description": "At the start of ally targets' turns, they lose 500 HP. This effect can be fatal."
+                    },
+                    {
+                        "id": 3033071,
+                        "name": "Scales",
+                        "description": "Enemy targets initially have 20 stacks of this effect. Each stack reduces enemy targets' DMG taken by 2%. Enemy targets lose 1 stack each time they are attacked. Stacks of this effect will reset during boss enemy phase transitions."
+                    }
+                ],
+                "boss_buffs": [
+                    {
+                        "id": 3033073,
+                        "name": "Marvelous Laughter",
+                        "description": "Increases all ally targets' Elation by 40%, and increases the All-Type RES PEN of Elation DMG dealt by 20%. This effect is doubled when using an Elation Skill."
+                    },
+                    {
+                        "id": 3033074,
+                        "name": "Finale's Kiss",
+                        "description": "At the start of any ally target's turn, all ally targets regenerate 25% Energy. This effect can only be triggered 1 time per battle. Increases Skill and Ultimate DMG dealt by all ally targets by 40%."
+                    },
+                    {
+                        "id": 3033087,
+                        "name": "Memoria Swarm",
+                        "description": "When the number of ally memosprites is 1/2/3/4, DMG dealt by all allies increases by 20%/25%/30%/50%."
+                    }
+                ],
+                "battle_config": {
+                    "battle_type": "DEFAULT",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3033058
+                        },
+                        {
+                            "level": 1,
+                            "id": 3033071
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 403501001,
+                                "amount": 1,
+                                "level": 100
+                            }
+                        ]
+                    ],
+                    "stage_id": 30509021,
+                    "path_resonance_id": 0,
+                    "cycle_count": 0
+                }
+            }
+        ]
+    }
+}
