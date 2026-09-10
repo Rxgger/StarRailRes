@@ -23,6 +23,10 @@
                         {
                             "level": 1,
                             "id": 3033058
+                        },
+                        {
+                            "level": 1,
+                            "id": 3034003
                         }
                     ],
                     "custom_stats": [],
@@ -322,6 +326,10 @@
                         {
                             "level": 1,
                             "id": 3033063
+                        },
+                        {
+                            "level": 1,
+                            "id": 3034002
                         }
                     ],
                     "custom_stats": [],
@@ -378,12 +386,12 @@
                         [
                             {
                                 "monster_id": 4013010,
-                                "amount": 2,
+                                "amount": 1,
                                 "level": 95
                             },
                             {
                                 "monster_id": 8003020,
-                                "amount": 2,
+                                "amount": 1,
                                 "level": 95
                             }
                         ],

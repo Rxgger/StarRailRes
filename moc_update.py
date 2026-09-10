@@ -110,7 +110,8 @@ def build_wave_monsters(waves: list, level: int) -> list:
     for wave in waves:
         counts = Counter(mid for mid in wave if mid != 0)
         result.append([
-            {"monster_id": mid, "amount": count, "level": level}
+            #{"monster_id": mid, "amount": count, "level": level}
+            {"monster_id": mid, "amount": 1, "level": level}
             for mid, count in counts.items()
         ])
     return result

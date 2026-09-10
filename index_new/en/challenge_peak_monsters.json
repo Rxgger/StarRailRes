@@ -94,5 +94,77 @@
     },
     "402301001": {
         "icon": "icon/monster/402301001.png"
+    },
+    "1002030": {
+        "icon": "icon/monster/1002030.png"
+    },
+    "1002050": {
+        "icon": "icon/monster/1002050.png"
+    },
+    "2002010": {
+        "icon": "icon/monster/2002010.png"
+    },
+    "2032010": {
+        "icon": "icon/monster/2032010.png"
+    },
+    "2034016": {
+        "icon": "icon/monster/2034016.png"
+    },
+    "4012010": {
+        "icon": "icon/monster/4012010.png"
+    },
+    "4022010": {
+        "icon": "icon/monster/4022010.png"
+    },
+    "4034014": {
+        "icon": "icon/monster/4034014.png"
+    },
+    "4062020": {
+        "icon": "icon/monster/4062020.png"
+    },
+    "5012010": {
+        "icon": "icon/monster/5012010.png"
+    },
+    "5012040": {
+        "icon": "icon/monster/5012040.png"
+    },
+    "5012100": {
+        "icon": "icon/monster/5012100.png"
+    },
+    "5014023": {
+        "icon": "icon/monster/5014023.png"
+    },
+    "5024014": {
+        "icon": "icon/monster/5024014.png"
+    },
+    "8024013": {
+        "icon": "icon/monster/8024013.png"
+    },
+    "201302012": {
+        "icon": "icon/monster/201302012.png"
+    },
+    "202205004": {
+        "icon": "icon/monster/202205004.png"
+    },
+    "202303016": {
+        "icon": "icon/monster/202303016.png"
+    },
+    "300302007": {
+        "icon": "icon/monster/300302007.png"
+    },
+    "302401204": {
+        "icon": "icon/monster/302401204.png"
+    },
+    "401301201": {
+        "icon": "icon/monster/401301201.png"
+    },
+    "402301002": {
+        "icon": "icon/monster/402301002.png"
+    },
+    "501211002": {
+        "icon": "icon/monster/501211002.png"
+    },
+    "501301002": {
+        "icon": "icon/monster/501301002.png"
     }
 }

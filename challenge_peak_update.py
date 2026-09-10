@@ -135,7 +135,8 @@ def build_monsters_by_wave(spawn_config: list, monster_level: int) -> list:
     waves = []
     for wave in spawn_config:
         waves.append([
-            {"monster_id": int(mid), "amount": info["count"], "level": monster_level}
+            #{"monster_id": int(mid), "amount": info["count"], "level": monster_level}
+            {"monster_id": int(mid), "amount": 1, "level": monster_level}
             for mid, info in wave.items()
         ])
     return waves
