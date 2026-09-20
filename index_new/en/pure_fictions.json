@@ -52,11 +52,6 @@
                     "monsters": [
                         [
                             {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
-                            {
                                 "monster_id": 4012010,
                                 "amount": 14,
                                 "level": 85
@@ -132,11 +127,6 @@
                     "monsters": [
                         [
                             {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
-                            {
                                 "monster_id": 2032010,
                                 "amount": 14,
                                 "level": 85
@@ -207,11 +197,6 @@
                     "custom_stats": [],
                     "monsters": [
                         [
-                            {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
                             {
                                 "monster_id": 1002030,
                                 "amount": 14,
@@ -323,11 +308,6 @@
                     "monsters": [
                         [
                             {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
-                            {
                                 "monster_id": 5012010,
                                 "amount": 12,
                                 "level": 85
@@ -403,11 +383,6 @@
                     "monsters": [
                         [
                             {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
-                            {
                                 "monster_id": 5012100,
                                 "amount": 12,
                                 "level": 85
@@ -478,11 +453,6 @@
                     "custom_stats": [],
                     "monsters": [
                         [
-                            {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
                             {
                                 "monster_id": 2002010,
                                 "amount": 12,
@@ -594,11 +564,6 @@
                     "monsters": [
                         [
                             {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
-                            {
                                 "monster_id": 5012010,
                                 "amount": 12,
                                 "level": 85
@@ -670,11 +635,6 @@
                     "monsters": [
                         [
                             {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
-                            {
                                 "monster_id": 3012020,
                                 "amount": 12,
                                 "level": 85
@@ -745,11 +705,6 @@
                     "custom_stats": [],
                     "monsters": [
                         [
-                            {
-                                "monster_id": 8003060,
-                                "amount": 1,
-                                "level": 85
-                            },
                             {
                                 "monster_id": 2022010,
                                 "amount": 12,

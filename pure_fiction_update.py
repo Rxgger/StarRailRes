@@ -17,6 +17,7 @@ import io
 import json
 import os
 import re
+import urllib.error
 import urllib.request
 from collections import Counter
 
@@ -179,7 +180,7 @@ def resolve_fever_buffs(raw_buffs: list, textmap_en: dict) -> list:
 
 
 def build_wave_monsters(
-    spawn_configs: list, monster_level: int
+    spawn_configs: list, monster_level: int, icon_monster_ids: set
 ) -> list:
     """
     Pure Fiction supplies spawn_configs for each node. Each wave is a dict
@@ -196,6 +197,7 @@ def build_wave_monsters(
                     "level": monster_level,
                 }
                 for mid, info in wave.items()
+                if int(mid) in icon_monster_ids
             ]
         )
 
@@ -210,6 +212,7 @@ def build_node(
     level: int,
     maze_buff_id: int,
     stages_api: dict,
+    icon_monster_ids: set,
 ) -> dict:
     battle_blessings = []
 
@@ -244,12 +247,15 @@ def build_node(
     # If an API response unexpectedly lacks spawn configs, fall back to the
     # same duplicate-counting approach used by moc_update.py.
     if spawn_configs:
-        monsters = build_wave_monsters(spawn_configs, level)
+        monsters = build_wave_monsters(spawn_configs, level, icon_monster_ids)
     else:
         counts_by_wave = []
 
         for wave in monster_ids:
-            counts = Counter(mid for mid in wave if mid != 0)
+            counts = Counter(
+                int(mid) for mid in wave
+                if int(mid) in icon_monster_ids
+            )
             counts_by_wave.append(
                 [
                     {
@@ -293,7 +299,8 @@ def find_tierce_floor(group: dict):
 
 
 def build_pure_fiction_entry(
-    group: dict, textmap_en: dict, stages_api: dict
+    group: dict, textmap_en: dict, stages_api: dict,
+    icon_monster_ids: set,
 ):
     tierce_floor = find_tierce_floor(group)
 
@@ -312,6 +319,7 @@ def build_pure_fiction_entry(
             level,
             maze_buff_id,
             stages_api,
+            icon_monster_ids,
         ),
         build_node(
             NODE_NAMES[1],
@@ -321,6 +329,7 @@ def build_pure_fiction_entry(
             level,
             maze_buff_id,
             stages_api,
+            icon_monster_ids,
         ),
         build_node(
             NODE_NAMES[2],
@@ -330,6 +339,7 @@ def build_pure_fiction_entry(
             level,
             maze_buff_id,
             stages_api,
+            icon_monster_ids,
         ),
     ]
 
@@ -348,34 +358,30 @@ def build_pure_fiction_entry(
     }
 
 
-def collect_monster_ids(tierce_floor: dict) -> set:
-    ids = set()
-
-    # Use all three monster-id lists, matching MoC's collection behavior.
-    for waves in (
-        tierce_floor["monster_ids_top"],
-        tierce_floor["monster_ids_bot"],
-        tierce_floor["monster_ids_tierce"],
-    ):
-        for wave in waves:
-            for mid in wave:
-                if mid != 0:
-                    ids.add(int(mid))
-
-    return ids
+def collect_monster_ids(entry: dict) -> set:
+    # Download icons for exactly the monsters retained in battle_config.
+    return {
+        monster["monster_id"]
+        for node in entry["nodes"]
+        for wave in node["battle_config"]["monsters"]
+        for monster in wave
+    }
 
 
 def download_monster_icons(
     monster_ids: set, monsters_api: dict, registry: dict
-) -> None:
+) -> set:
     os.makedirs(ICON_DIR, exist_ok=True)
+    available_ids = set()
 
     for mid in sorted(monster_ids):
         mid_str = str(mid)
         target_path = os.path.join(ICON_DIR, f"{mid_str}.png")
         relative_path = f"icon/monster/{mid_str}.png"
 
-        if mid_str in registry and os.path.exists(target_path):
+        if os.path.isfile(target_path):
+            registry[mid_str] = {"icon": relative_path}
+            available_ids.add(mid)
             continue
 
         monster = monsters_api.get(mid_str)
@@ -399,13 +405,23 @@ def download_monster_icons(
             },
         )
 
-        with urllib.request.urlopen(req) as response:
-            raw_bytes = response.read()
+        try:
+            with urllib.request.urlopen(req) as response:
+                raw_bytes = response.read()
 
-        image = Image.open(io.BytesIO(raw_bytes)).convert("RGBA")
-        image.save(target_path, "PNG")
+            image = Image.open(io.BytesIO(raw_bytes)).convert("RGBA")
+            image.save(target_path, "PNG")
+        except (urllib.error.URLError, OSError, ValueError) as exc:
+            print(
+                f"WARNING: icon unavailable for monster {mid_str} "
+                f"({exc}), removing it from battle config."
+            )
+            continue
 
         registry[mid_str] = {"icon": relative_path}
+        available_ids.add(mid)
+
+    return available_ids
 
 
 def confirm(prompt: str) -> bool:
@@ -443,6 +459,12 @@ def main():
         )
         return
 
+    monsters_api = fetch_json(MONSTERS_URL)
+    icon_monster_ids = {
+        int(mid) for mid, monster in monsters_api.items()
+        if monster and monster.get("icon")
+    }
+
     added = []
     referenced_monster_ids = set()
 
@@ -460,6 +482,7 @@ def main():
             group,
             textmap_en,
             stages_api,
+            icon_monster_ids,
         )
 
         if entry is None:
@@ -471,8 +494,7 @@ def main():
 
         pure_fictions[gid] = entry
 
-        tierce_floor = find_tierce_floor(group)
-        referenced_monster_ids |= collect_monster_ids(tierce_floor)
+        referenced_monster_ids |= collect_monster_ids(entry)
 
         added.append(f"{display_name} ({gid})")
 
@@ -480,18 +502,29 @@ def main():
         print("No Pure Fiction groups were added.")
         return
 
-    save_json(PURE_FICTIONS_PATH, pure_fictions)
-
     if referenced_monster_ids:
-        monsters_api = fetch_json(MONSTERS_URL)
-
-        download_monster_icons(
+        available_monster_ids = download_monster_icons(
             referenced_monster_ids,
             monsters_api,
             monsters_registry,
         )
 
+        for gid in missing_ids:
+            entry = pure_fictions.get(gid)
+            if entry is None:
+                continue
+            for node in entry["nodes"]:
+                node["battle_config"]["monsters"] = [
+                    [
+                        monster for monster in wave
+                        if monster["monster_id"] in available_monster_ids
+                    ]
+                    for wave in node["battle_config"]["monsters"]
+                ]
+
         save_json(MONSTERS_PATH, monsters_registry)
+
+    save_json(PURE_FICTIONS_PATH, pure_fictions)
 
     print(
         f"Added {len(added)} Pure Fiction group(s): "
