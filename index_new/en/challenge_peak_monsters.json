@@ -175,5 +175,53 @@
     },
     "406401204": {
         "icon": "icon/monster/406401204.png"
+    },
+    "1023020": {
+        "icon": "icon/monster/1023020.png"
+    },
+    "3003030": {
+        "icon": "icon/monster/3003030.png"
+    },
+    "3003040": {
+        "icon": "icon/monster/3003040.png"
+    },
+    "3013010": {
+        "icon": "icon/monster/3013010.png"
+    },
+    "3024020": {
+        "icon": "icon/monster/3024020.png"
+    },
+    "2022010": {
+        "icon": "icon/monster/2022010.png"
+    },
+    "3012020": {
+        "icon": "icon/monster/3012020.png"
+    },
+    "4032040": {
+        "icon": "icon/monster/4032040.png"
+    },
+    "5012020": {
+        "icon": "icon/monster/5012020.png"
+    },
+    "100402014": {
+        "icon": "icon/monster/100402014.png"
+    },
+    "202401406": {
+        "icon": "icon/monster/202401406.png"
+    },
+    "402302002": {
+        "icon": "icon/monster/402302002.png"
+    },
+    "405301002": {
+        "icon": "icon/monster/405301002.png"
+    },
+    "202401604": {
+        "icon": "icon/monster/202401604.png"
+    },
+    "203501204": {
+        "icon": "icon/monster/203501204.png"
+    },
+    "501401404": {
+        "icon": "icon/monster/501401404.png"
     }
 }

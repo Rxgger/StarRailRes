@@ -12,6 +12,7 @@
             {
                 "name": "Node 1",
                 "stage_id": 30126121,
+                "has_corrosion": false,
                 "battle_config": {
                     "battle_type": "MOC",
                     "blessings": [
@@ -50,6 +51,7 @@
             {
                 "name": "Node 2",
                 "stage_id": 30126122,
+                "has_corrosion": false,
                 "battle_config": {
                     "battle_type": "MOC",
                     "blessings": [
@@ -88,6 +90,7 @@
             {
                 "name": "Node 3",
                 "stage_id": 30126123,
+                "has_corrosion": true,
                 "battle_config": {
                     "battle_type": "MOC",
                     "blessings": [
@@ -142,6 +145,7 @@
             {
                 "name": "Node 1",
                 "stage_id": 30125121,
+                "has_corrosion": true,
                 "battle_config": {
                     "battle_type": "MOC",
                     "blessings": [
@@ -184,6 +188,7 @@
             {
                 "name": "Node 2",
                 "stage_id": 30125122,
+                "has_corrosion": false,
                 "battle_config": {
                     "battle_type": "MOC",
                     "blessings": [
@@ -222,6 +227,7 @@
             {
                 "name": "Node 3",
                 "stage_id": 30125123,
+                "has_corrosion": false,
                 "battle_config": {
                     "battle_type": "MOC",
                     "blessings": [
@@ -253,6 +259,140 @@
                         ]
                     ],
                     "stage_id": 30125123,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            }
+        ]
+    },
+    "1034": {
+        "id": 1034,
+        "name": "Stormcleanse",
+        "begin_time": "2026-06-01 04:00:00",
+        "end_time": "2026-08-22 04:00:00",
+        "turbulence": {
+            "id": 3030147,
+            "description": "At the beginning of each Cycle, randomly causes an ally target following the Path of The Hunt or the Path of Erudition to take action immediately, and increases their DMG dealt by 80% for 1 turn(s)."
+        },
+        "nodes": [
+            {
+                "name": "Node 1",
+                "stage_id": 30124121,
+                "has_corrosion": false,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030147
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 3013010,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 1023020,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 3024020,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30124121,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            },
+            {
+                "name": "Node 2",
+                "stage_id": 30124122,
+                "has_corrosion": false,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030147
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 5013040,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 5013070,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 5014020,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30124122,
+                    "path_resonance_id": 0,
+                    "cycle_count": 30
+                }
+            },
+            {
+                "name": "Node 3",
+                "stage_id": 30124123,
+                "has_corrosion": false,
+                "battle_config": {
+                    "battle_type": "MOC",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3030147
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 3003050,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 3003040,
+                                "amount": 1,
+                                "level": 95
+                            },
+                            {
+                                "monster_id": 3003030,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 3024030,
+                                "amount": 1,
+                                "level": 95
+                            }
+                        ]
+                    ],
+                    "stage_id": 30124123,
                     "path_resonance_id": 0,
                     "cycle_count": 30
                 }

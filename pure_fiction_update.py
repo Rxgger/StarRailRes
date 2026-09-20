@@ -44,7 +44,7 @@ MONSTERS_PATH = os.path.join(
 )
 ICON_DIR = os.path.join("icon", "monster")
 
-CANDIDATE_GROUP_COUNT = 2
+CANDIDATE_GROUP_COUNT = 3
 BATTLE_CYCLE_COUNT = 4
 
 DESC_PLACEHOLDER = re.compile(
@@ -226,6 +226,7 @@ def build_node(
     stage = stages_api.get(str(stage_id))
     invasion_config = stage.get("invasion_config") if stage else None
 
+    has_corrosion = False
     if invasion_config:
         invasion_maze_buff_id = invasion_config.get("maze_buff_id")
 
@@ -236,6 +237,7 @@ def build_node(
                     "id": invasion_maze_buff_id,
                 }
             )
+            has_corrosion = True
 
     # spawn_configs are authoritative for the battle waves. monster_ids is
     # retained as an argument so the node mapping follows the MoC structure.
@@ -264,6 +266,9 @@ def build_node(
     return {
         "name": name,
         "stage_id": stage_id,
+        # Frontend-only flag — not part of battle_config, doesn't get
+        # written into rygger-data.json when this node is queued.
+        "has_corrosion": has_corrosion,
         "battle_config": {
             "battle_type": "PF",
             "blessings": battle_blessings,
@@ -296,7 +301,7 @@ def build_pure_fiction_entry(
         return None
 
     level = tierce_floor["level"]
-    maze_buff_id = group.get("maze_buff_id")
+    maze_buff_id = tierce_floor["turbulence_maze_buff_id"]
 
     nodes = [
         build_node(

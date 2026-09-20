@@ -39,6 +39,7 @@
             {
                 "name": "Node 1",
                 "stage_id": 30325041,
+                "has_corrosion": false,
                 "battle_config": {
                     "battle_type": "PF",
                     "blessings": [
@@ -114,6 +115,7 @@
             {
                 "name": "Node 2",
                 "stage_id": 30325042,
+                "has_corrosion": true,
                 "battle_config": {
                     "battle_type": "PF",
                     "blessings": [
@@ -193,6 +195,7 @@
             {
                 "name": "Node 3",
                 "stage_id": 30325043,
+                "has_corrosion": false,
                 "battle_config": {
                     "battle_type": "PF",
                     "blessings": [
@@ -307,12 +310,13 @@
             {
                 "name": "Node 1",
                 "stage_id": 30324041,
+                "has_corrosion": false,
                 "battle_config": {
                     "battle_type": "PF",
                     "blessings": [
                         {
                             "level": 1,
-                            "id": 3031230
+                            "id": 3031220
                         }
                     ],
                     "custom_stats": [],
@@ -382,12 +386,13 @@
             {
                 "name": "Node 2",
                 "stage_id": 30324042,
+                "has_corrosion": true,
                 "battle_config": {
                     "battle_type": "PF",
                     "blessings": [
                         {
                             "level": 1,
-                            "id": 3031230
+                            "id": 3031220
                         },
                         {
                             "level": 1,
@@ -461,12 +466,13 @@
             {
                 "name": "Node 3",
                 "stage_id": 30324043,
+                "has_corrosion": false,
                 "battle_config": {
                     "battle_type": "PF",
                     "blessings": [
                         {
                             "level": 1,
-                            "id": 3031230
+                            "id": 3031220
                         }
                     ],
                     "custom_stats": [],
@@ -529,6 +535,273 @@
                         ]
                     ],
                     "stage_id": 30324043,
+                    "path_resonance_id": 0,
+                    "cycle_count": 4
+                }
+            }
+        ]
+    },
+    "2025": {
+        "id": 2025,
+        "name": "-2008182496",
+        "begin_time": "2026-06-01 04:00:01",
+        "end_time": "2026-08-22 04:00:00",
+        "blessings": [
+            {
+                "id": 3031363,
+                "name": "Smack Talk",
+                "description": "Increases the All-Type RES PEN of Follow-Up ATK DMG dealt by 30%. During Surging Grit, after an ally target uses a Follow-Up ATK to attack enemy targets, deals Additional DMG equal to 40% of the attacker's ATK plus 20% of the attacker's Max HP to targets adjacent to each attacked enemy target. This DMG is considered as Follow-Up ATK DMG."
+            },
+            {
+                "id": 3031364,
+                "name": "Grand Rhetoric",
+                "description": "During Surging Grit, CRIT DMG dealt by ally targets when using their Ultimate increases by 60%. When Surging Grit ends, all allies regenerate 20% Energy."
+            },
+            {
+                "id": 3031365,
+                "name": "Motormouth",
+                "description": "Increases the SPD of all allies by 20%. During Surging Grit, DMG received by enemy targets additionally increases by 30%."
+            }
+        ],
+        "fever_buff_info": [
+            {
+                "name": "Follow-Up ATK",
+                "description": "After ally targets use a Follow-Up ATK to attack enemy targets, every enemy target hit additionally accumulates 8 Grit Value for allies."
+            },
+            {
+                "name": "Concordant Truce",
+                "description": "After an ally target uses a Follow-Up ATK or Ultimate, deals Additional DMG equal to 80% of the attacking character's ATK plus 40% of their Max HP to each attacked enemy target."
+            },
+            {
+                "name": "Surging Grit",
+                "description": "Upon entering Surging Grit, all allies regenerate 20% Energy. During Surging Grit, enemy targets take 50% more DMG, the Additional DMG dealt by \"Concordant Truce\" increases by 100%, and this DMG is considered as Follow-Up ATK DMG."
+            }
+        ],
+        "nodes": [
+            {
+                "name": "Node 1",
+                "stage_id": 30323041,
+                "has_corrosion": false,
+                "battle_config": {
+                    "battle_type": "PF",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3031230
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 8003060,
+                                "amount": 1,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 5012010,
+                                "amount": 12,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 5012020,
+                                "amount": 11,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 501211002,
+                                "amount": 2,
+                                "level": 85
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 1002030,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 8022010,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 402301002,
+                                "amount": 1,
+                                "level": 85
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 4012040,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 1022010,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 100402014,
+                                "amount": 1,
+                                "level": 85
+                            }
+                        ]
+                    ],
+                    "stage_id": 30323041,
+                    "path_resonance_id": 0,
+                    "cycle_count": 4
+                }
+            },
+            {
+                "name": "Node 2",
+                "stage_id": 30323042,
+                "has_corrosion": false,
+                "battle_config": {
+                    "battle_type": "PF",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3031230
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 8003060,
+                                "amount": 1,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 3012020,
+                                "amount": 12,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 4032040,
+                                "amount": 11,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 501211002,
+                                "amount": 2,
+                                "level": 85
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 4052020,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 5012030,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 405301002,
+                                "amount": 1,
+                                "level": 85
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 5012120,
+                                "amount": 21,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 4032040,
+                                "amount": 21,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 5014023,
+                                "amount": 1,
+                                "level": 85
+                            }
+                        ]
+                    ],
+                    "stage_id": 30323042,
+                    "path_resonance_id": 0,
+                    "cycle_count": 4
+                }
+            },
+            {
+                "name": "Node 3",
+                "stage_id": 30323043,
+                "has_corrosion": false,
+                "battle_config": {
+                    "battle_type": "PF",
+                    "blessings": [
+                        {
+                            "level": 1,
+                            "id": 3031230
+                        }
+                    ],
+                    "custom_stats": [],
+                    "monsters": [
+                        [
+                            {
+                                "monster_id": 8003060,
+                                "amount": 1,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 2022010,
+                                "amount": 12,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 4022010,
+                                "amount": 11,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 501211002,
+                                "amount": 2,
+                                "level": 85
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 3002020,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 2022040,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 402302002,
+                                "amount": 1,
+                                "level": 85
+                            }
+                        ],
+                        [
+                            {
+                                "monster_id": 2022080,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 2022070,
+                                "amount": 20,
+                                "level": 85
+                            },
+                            {
+                                "monster_id": 202401406,
+                                "amount": 1,
+                                "level": 85
+                            }
+                        ]
+                    ],
+                    "stage_id": 30323043,
                     "path_resonance_id": 0,
                     "cycle_count": 4
                 }

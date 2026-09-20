@@ -33,7 +33,7 @@ ICON_DIR = os.path.join("icon", "monster")
 
 # Only the N highest-numbered peak groups in the API are ever considered —
 # older rotations aren't worth carrying around locally.
-CANDIDATE_GROUP_COUNT = 2
+CANDIDATE_GROUP_COUNT = 3
 
 DESC_PLACEHOLDER = re.compile(r'<unbreak>#(\d+)(?:\[i\])?(%)?</unbreak>')
 COLOR_TAG = re.compile(r'<color=[^>]*>(.*?)</color>')
@@ -155,10 +155,12 @@ def build_peak_entry(peak: dict, textmap_en: dict, stages_api: dict) -> dict:
     # config the same way, at level 1.
     stage = stages_api.get(str(peak["stage_id"]))
     invasion_config = stage.get("invasion_config") if stage else None
+    has_corrosion = False
     if invasion_config:
         maze_buff_id = invasion_config.get("maze_buff_id")
         if maze_buff_id is not None:
             battle_blessings.append({"level": 1, "id": maze_buff_id})
+            has_corrosion = True
 
     is_boss = bool(peak.get("is_boss"))
     boss_buffs = resolve_buffs(peak.get("boss_maze_buffs") or [], textmap_en) if is_boss else []
@@ -171,6 +173,9 @@ def build_peak_entry(peak: dict, textmap_en: dict, stages_api: dict) -> dict:
         "is_boss": is_boss,
         "blessings": blessings_display,
         "boss_buffs": boss_buffs,
+        # Frontend-only flag — not part of battle_config, doesn't get
+        # written into rygger-data.json when this peak is queued.
+        "has_corrosion": has_corrosion,
         # Ready to be spliced straight into rygger-data.json's battle
         # config, unmodified, once the app side picks a fight.
         "battle_config": {

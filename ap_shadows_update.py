@@ -45,7 +45,7 @@ MONSTERS_PATH = os.path.join(
 )
 ICON_DIR = os.path.join("icon", "monster")
 
-CANDIDATE_GROUP_COUNT = 2
+CANDIDATE_GROUP_COUNT = 3
 NODE_NAMES = ("Node 1", "Node 2", "Node 3")
 
 DESC_PLACEHOLDER = re.compile(
@@ -188,6 +188,7 @@ def build_node(
     stage = stages_api.get(str(stage_id))
     invasion_config = stage.get("invasion_config") if stage else None
 
+    has_corrosion = False
     if invasion_config:
         invasion_maze_buff_id = invasion_config.get("maze_buff_id")
 
@@ -198,10 +199,14 @@ def build_node(
                     "id": invasion_maze_buff_id,
                 }
             )
+            has_corrosion = True
 
     return {
         "name": name,
         "stage_id": stage_id,
+        # Frontend-only flag — not part of battle_config, doesn't get
+        # written into rygger-data.json when this node is queued.
+        "has_corrosion": has_corrosion,
         "battle_config": {
             "battle_type": "AS",
             "blessings": battle_blessings,
@@ -236,7 +241,7 @@ def build_ap_shadow_entry(
         return None
 
     level = tierce_floor["level"]
-    maze_buff_id = group.get("maze_buff_id")
+    maze_buff_id = tierce_floor["turbulence_maze_buff_id"]
     cycle_count = tierce_floor.get("cycle_count", 0)
 
     return {

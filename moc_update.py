@@ -34,7 +34,7 @@ MOC_PATH = os.path.join("index_new", "en", "moc.json")
 MONSTERS_PATH = os.path.join("index_new", "en", "challenge_peak_monsters.json")
 ICON_DIR = os.path.join("icon", "monster")
 
-CANDIDATE_GROUP_COUNT = 2
+CANDIDATE_GROUP_COUNT = 3
 BATTLE_CYCLE_COUNT = 30
 
 DESC_PLACEHOLDER = re.compile(r'<unbreak>#(\d+)(?:\[i\])?(%)?</unbreak>')
@@ -123,15 +123,19 @@ def build_node(name: str, monster_ids: list, stage_id: int, level: int, turbulen
 
     stage = stages_api.get(str(stage_id))
     invasion_config = stage.get("invasion_config") if stage else None
+    has_corrosion = False
     if invasion_config:
         maze_buff_id = invasion_config.get("maze_buff_id")
         if maze_buff_id is not None:
             battle_blessings.append({"level": 1, "id": maze_buff_id})
-
+            has_corrosion = True
 
     return {
         "name": name,
         "stage_id": stage_id,
+        # Frontend-only flag — not part of battle_config, doesn't get
+        # written into rygger-data.json when this node is queued.
+        "has_corrosion": has_corrosion,
         "battle_config": {
             "battle_type": "MOC",
             "blessings": battle_blessings,
