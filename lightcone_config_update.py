@@ -4,18 +4,23 @@ Pulls light cone data from the private-build API and adds any light cone
 that's missing from this StarRailRes repo's light_cones.json,
 light_cone_promotions.json, and light_cone_ranks.json.
 
-Asks for confirmation per missing light cone before adding it.
+Adds every light cone missing from the local files.
 
 Run this from the StarRailRes repo root (same folder as index_new/).
 """
 
+import io
 import json
 import os
 import sys
 import urllib.request
 
-LIGHTCONES_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/lightcones.json"
-TEXTMAPS_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/textmaps.json"
+from PIL import Image
+
+from update_config import api_url, begin_tracking, finish_tracking
+
+LIGHTCONES_URL = api_url("lightcones.json")
+TEXTMAPS_URL = api_url("textmaps.json")
 
 LIGHT_CONES_PATH = os.path.join("index_new", "en", "light_cones.json")
 PROMOTIONS_PATH = os.path.join("index_new", "en", "light_cone_promotions.json")
@@ -48,6 +53,72 @@ def save_json(path: str, data) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
         f.write("\n")
+
+
+def download_png_assets(assets: list[tuple[str, str, str]], overwrite: bool = False) -> None:
+    """Download CDN images, convert them to real PNG files, and only write
+    them after every required download/conversion has succeeded."""
+    png_by_url: dict[str, bytes] = {}
+    prepared: list[tuple[str, bytes]] = []
+
+    for label, url, destination in assets:
+        if os.path.exists(destination) and not overwrite:
+            print(f"Keeping existing {label}: {destination}")
+            continue
+
+        if not url:
+            raise ValueError(f"Missing CDN URL for {label}")
+
+        if url not in png_by_url:
+            print(f"Downloading {label}: {url}")
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"},
+            )
+            with urllib.request.urlopen(req) as response:
+                source_bytes = response.read()
+
+            with Image.open(io.BytesIO(source_bytes)) as image:
+                output = io.BytesIO()
+                image.convert("RGBA").save(output, format="PNG", optimize=True)
+                png_by_url[url] = output.getvalue()
+
+        prepared.append((destination, png_by_url[url]))
+
+    for destination, png_bytes in prepared:
+        os.makedirs(os.path.dirname(destination), exist_ok=True)
+        temporary_path = f"{destination}.tmp"
+        try:
+            with open(temporary_path, "wb") as image_file:
+                image_file.write(png_bytes)
+            os.replace(temporary_path, destination)
+        finally:
+            if os.path.exists(temporary_path):
+                os.remove(temporary_path)
+
+
+def download_light_cone_images(light_cone: dict, overwrite: bool = False) -> None:
+    light_cone_id = str(light_cone["id"])
+    download_png_assets(
+        [
+            (
+                "light cone icon",
+                light_cone.get("icon"),
+                os.path.join("icon", "light_cone", f"{light_cone_id}.png"),
+            ),
+            (
+                "light cone preview",
+                light_cone.get("preview"),
+                os.path.join("image", "light_cone_preview", f"{light_cone_id}.png"),
+            ),
+            (
+                "light cone portrait",
+                light_cone.get("portrait"),
+                os.path.join("image", "light_cone_portrait", f"{light_cone_id}.png"),
+            ),
+        ],
+        overwrite=overwrite,
+    )
 
 
 def clean_number(value):
@@ -116,10 +187,6 @@ def build_rank_entry(lc: dict, textmap_en: dict) -> dict:
     }
 
 
-def confirm(prompt: str) -> bool:
-    answer = input(f"{prompt} [y/N]: ").strip().lower()
-    return answer in ("y", "yes")
-
 
 def main():
     light_cones_api = fetch_json(LIGHTCONES_URL)
@@ -130,36 +197,54 @@ def main():
     promotions = load_json(PROMOTIONS_PATH)
     ranks = load_json(RANKS_PATH)
 
-    missing_ids = [lcid for lcid in light_cones_api if lcid not in light_cones]
+    target_ids, discovery = begin_tracking(
+        "light_cones", light_cones_api.keys(), light_cones.keys()
+    )
+    processed_ids = []
+    processed_names = []
+    failures = []
+    for lcid in target_ids:
+        if lcid not in light_cones_api:
+            message = f"Tracked light cone {lcid} is not present in the current API build."
+            print(f"ERROR: {message}", file=sys.stderr)
+            failures.append(message)
+            continue
 
-    if not missing_ids:
-        print("No new light cones found — everything in the API is already present.")
-        return
-
-    added = []
-    for lcid in missing_ids:
         lc = light_cones_api[lcid]
         display_name = resolve_text(lc["name"], textmap_en)
 
-        if not confirm(f"Do you wanna update with {display_name} - {lcid}?"):
-            print(f"Skipping {display_name} ({lcid}).")
+        try:
+            download_light_cone_images(lc, overwrite=not discovery)
+        except Exception as exc:
+            message = f"Could not prepare images for {display_name} ({lcid}): {exc}."
+            print(f"ERROR: {message}", file=sys.stderr)
+            failures.append(message)
             continue
 
         light_cones[lcid] = build_light_cone_entry(lc, textmap_en)
         promotions[lcid] = build_promotion_entry(lc)
         ranks[lcid] = build_rank_entry(lc, textmap_en)
 
-        added.append(f"{display_name} ({lcid})")
+        processed_ids.append(lcid)
+        processed_names.append(f"{display_name} ({lcid})")
 
-    if not added:
-        print("No light cones were added.")
-        return
+    if processed_ids:
+        save_json(LIGHT_CONES_PATH, light_cones)
+        save_json(PROMOTIONS_PATH, promotions)
+        save_json(RANKS_PATH, ranks)
 
-    save_json(LIGHT_CONES_PATH, light_cones)
-    save_json(PROMOTIONS_PATH, promotions)
-    save_json(RANKS_PATH, ranks)
+    finish_tracking(
+        "light_cones", processed_ids, discovery, completed=not failures
+    )
 
-    print(f"Added {len(added)} light cone(s): {', '.join(added)}")
+    action = "Discovered" if discovery else "Refreshed"
+    if processed_names:
+        print(f"{action} {len(processed_names)} light cone(s): {', '.join(processed_names)}")
+    else:
+        print(f"{action} 0 light cones.")
+
+    if failures:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

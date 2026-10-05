@@ -2,13 +2,13 @@
 """
 Pulls Pure Fiction data from the private-build API into a brand-new
 pure_fictions.json. Also downloads icons for any monster referenced by the
-confirmed Pure Fiction tierce floor into icon/monster/, tracked in the same
+imported Pure Fiction tierce floor into icon/monster/, tracked in the same
 challenge_peak_monsters.json registry used by the other import scripts.
 
-Only ever looks at the 2 highest-numbered Pure Fiction groups in the API
-response. For each confirmed group, only the floor with
+Always rebuilds and overwrites the 3 highest-numbered Pure Fiction groups in the API
+response. For each imported group, only the floor with
 has_tierce_mode=true is used — that's the one with 3 selectable nodes
-(top/bot/tierce). Asks for confirmation per missing group.
+(top/bot/tierce).
 
 Run this from the StarRailRes repo root (same folder as index_new/).
 """
@@ -23,19 +23,13 @@ from collections import Counter
 
 from PIL import Image
 
+from update_config import api_url
 
-PURE_FICTION_URL = (
-    "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/pure-fictions.json"
-)
-MONSTERS_URL = (
-    "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/monsters.json"
-)
-STAGES_URL = (
-    "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/stages.json"
-)
-TEXTMAPS_URL = (
-    "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/textmaps.json"
-)
+
+PURE_FICTION_URL = api_url("pure-fictions.json")
+MONSTERS_URL = api_url("monsters.json")
+STAGES_URL = api_url("stages.json")
+TEXTMAPS_URL = api_url("textmaps.json")
 
 PURE_FICTIONS_PATH = os.path.join("index_new", "en", "pure_fictions.json")
 
@@ -424,10 +418,6 @@ def download_monster_icons(
     return available_ids
 
 
-def confirm(prompt: str) -> bool:
-    answer = input(f"{prompt} [y/N]: ").strip().lower()
-    return answer in ("y", "yes")
-
 
 def main():
     pure_fiction_api = fetch_json(PURE_FICTION_URL)
@@ -440,24 +430,12 @@ def main():
     pure_fictions = load_json_or_empty(PURE_FICTIONS_PATH)
     monsters_registry = load_json_or_empty(MONSTERS_PATH)
 
-    # Only consider the 2 highest-numbered groups, exactly like MoC.
+    # Always refresh the highest-numbered groups, exactly like MoC.
     candidate_ids = sorted(
         pure_fiction_api.keys(),
         key=int,
         reverse=True,
     )[:CANDIDATE_GROUP_COUNT]
-
-    missing_ids = [
-        gid for gid in candidate_ids
-        if gid not in pure_fictions
-    ]
-
-    if not missing_ids:
-        print(
-            f"No new Pure Fiction groups found among the latest "
-            f"{CANDIDATE_GROUP_COUNT} — everything is already present."
-        )
-        return
 
     monsters_api = fetch_json(MONSTERS_URL)
     icon_monster_ids = {
@@ -465,18 +443,12 @@ def main():
         if monster and monster.get("icon")
     }
 
-    added = []
+    updated = []
     referenced_monster_ids = set()
 
-    for gid in missing_ids:
+    for gid in candidate_ids:
         group = pure_fiction_api[gid]
         display_name = resolve_text(group["name"], textmap_en)
-
-        if not confirm(
-            f"Do you wanna update with {display_name} - {gid}?"
-        ):
-            print(f"Skipping {display_name} ({gid}).")
-            continue
 
         entry = build_pure_fiction_entry(
             group,
@@ -496,10 +468,10 @@ def main():
 
         referenced_monster_ids |= collect_monster_ids(entry)
 
-        added.append(f"{display_name} ({gid})")
+        updated.append(f"{display_name} ({gid})")
 
-    if not added:
-        print("No Pure Fiction groups were added.")
+    if not updated:
+        print("No Pure Fiction groups were updated.")
         return
 
     if referenced_monster_ids:
@@ -509,7 +481,7 @@ def main():
             monsters_registry,
         )
 
-        for gid in missing_ids:
+        for gid in candidate_ids:
             entry = pure_fictions.get(gid)
             if entry is None:
                 continue
@@ -527,8 +499,8 @@ def main():
     save_json(PURE_FICTIONS_PATH, pure_fictions)
 
     print(
-        f"Added {len(added)} Pure Fiction group(s): "
-        f"{', '.join(added)}"
+        f"Updated {len(updated)} Pure Fiction group(s): "
+        f"{', '.join(updated)}"
     )
 
 

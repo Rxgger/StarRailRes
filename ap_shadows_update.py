@@ -3,8 +3,8 @@
 Pulls Apocalyptic Shadow data from the private-build API.
 
 Behavior follows moc_update.py / pure_fiction_update.py:
-- only considers the 2 highest-numbered API groups
-- asks for confirmation for each group that is not already stored
+- always rebuilds and overwrites the 3 highest-numbered API groups
+- imports each group that is not already stored
 - uses the floor with has_tierce_mode=true
 - creates Node 1 / Node 2 / Node 3 from top/bot/tierce
 - resolves names, turbulence descriptions, blessings and desc params
@@ -24,19 +24,13 @@ from collections import Counter
 
 from PIL import Image
 
+from update_config import api_url
 
-AP_SHADOWS_URL = (
-    "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/ap-shadows.json"
-)
-MONSTERS_URL = (
-    "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/monsters.json"
-)
-STAGES_URL = (
-    "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/stages.json"
-)
-TEXTMAPS_URL = (
-    "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/textmaps.json"
-)
+
+AP_SHADOWS_URL = api_url("ap-shadows.json")
+MONSTERS_URL = api_url("monsters.json")
+STAGES_URL = api_url("stages.json")
+TEXTMAPS_URL = api_url("textmaps.json")
 
 AP_SHADOWS_PATH = os.path.join("index_new", "en", "ap_shadows.json")
 
@@ -356,10 +350,6 @@ def download_monster_icons(
         registry[mid_str] = {"icon": relative_path}
 
 
-def confirm(prompt: str) -> bool:
-    answer = input(f"{prompt} [y/N]: ").strip().lower()
-    return answer in ("y", "yes")
-
 
 def main():
     ap_shadows_api = fetch_json(AP_SHADOWS_URL)
@@ -372,37 +362,19 @@ def main():
     ap_shadows = load_json_or_empty(AP_SHADOWS_PATH)
     monsters_registry = load_json_or_empty(MONSTERS_PATH)
 
-    # Exactly like the other importers: only inspect the two newest groups.
+    # Exactly like the other importers: always refresh the newest groups.
     candidate_ids = sorted(
         ap_shadows_api.keys(),
         key=int,
         reverse=True,
     )[:CANDIDATE_GROUP_COUNT]
 
-    missing_ids = [
-        gid for gid in candidate_ids
-        if gid not in ap_shadows
-    ]
-
-    if not missing_ids:
-        print(
-            f"No new Apocalyptic Shadow groups found among the latest "
-            f"{CANDIDATE_GROUP_COUNT} — everything is already present."
-        )
-        return
-
-    added = []
+    updated = []
     referenced_monster_ids = set()
 
-    for gid in missing_ids:
+    for gid in candidate_ids:
         group = ap_shadows_api[gid]
         display_name = resolve_text(group["name"], textmap_en)
-
-        if not confirm(
-            f"Do you wanna update with {display_name} - {gid}?"
-        ):
-            print(f"Skipping {display_name} ({gid}).")
-            continue
 
         entry = build_ap_shadow_entry(
             group,
@@ -422,10 +394,10 @@ def main():
         tierce_floor = find_tierce_floor(group)
         referenced_monster_ids |= collect_monster_ids(tierce_floor)
 
-        added.append(f"{display_name} ({gid})")
+        updated.append(f"{display_name} ({gid})")
 
-    if not added:
-        print("No Apocalyptic Shadow groups were added.")
+    if not updated:
+        print("No Apocalyptic Shadow groups were updated.")
         return
 
     save_json(AP_SHADOWS_PATH, ap_shadows)
@@ -442,8 +414,8 @@ def main():
         save_json(MONSTERS_PATH, monsters_registry)
 
     print(
-        f"Added {len(added)} Apocalyptic Shadow group(s): "
-        f"{', '.join(added)}"
+        f"Updated {len(updated)} Apocalyptic Shadow group(s): "
+        f"{', '.join(updated)}"
     )
 
 

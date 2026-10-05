@@ -3,12 +3,12 @@
 Pulls challenge peak data (one of the endgame modes) from the private-build
 API into a brand-new challenge_peaks.json (this doesn't exist in the real
 StarRailRes repo — it's specific to this project). Also downloads icons for
-any monster referenced by the confirmed peak groups into icon/monster/, and
+any monster referenced by the imported peak groups into icon/monster/, and
 tracks them in a small challenge_peak_monsters.json registry.
 
-Only ever looks at the 2 highest-numbered peak groups in the API response
+Always rebuilds and overwrites the 3 highest-numbered peak groups in the API response
 (e.g. groups 9 and 10) — older groups are irrelevant rotations we don't
-want cluttering the local file. Asks for confirmation per missing group.
+want cluttering the local file.
 
 Run this from the StarRailRes repo root (same folder as index_new/).
 """
@@ -22,10 +22,12 @@ import urllib.request
 
 from PIL import Image
 
-CHALLENGE_PEAK_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/challenge-peak.json"
-MONSTERS_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/monsters.json"
-STAGES_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/stages.json"
-TEXTMAPS_URL = "https://cdn.neonteam.dev/neonteam/4.5.53-16399740/textmaps.json"
+from update_config import api_url
+
+CHALLENGE_PEAK_URL = api_url("challenge-peak.json")
+MONSTERS_URL = api_url("monsters.json")
+STAGES_URL = api_url("stages.json")
+TEXTMAPS_URL = api_url("textmaps.json")
 
 CHALLENGE_PEAKS_PATH = os.path.join("index_new", "en", "challenge_peaks.json")
 MONSTERS_PATH = os.path.join("index_new", "en", "challenge_peak_monsters.json")
@@ -229,10 +231,6 @@ def download_monster_icons(monster_ids: set, monsters_api: dict, registry: dict)
         registry[mid_str] = {"icon": relative_path}
 
 
-def confirm(prompt: str) -> bool:
-    answer = input(f"{prompt} [y/N]: ").strip().lower()
-    return answer in ("y", "yes")
-
 
 def main():
     challenge_peak_api = fetch_json(CHALLENGE_PEAK_URL)
@@ -249,23 +247,12 @@ def main():
     monsters_registry = load_json_or_empty(MONSTERS_PATH)
 
     candidate_ids = sorted(challenge_peak_api.keys(), key=int, reverse=True)[:CANDIDATE_GROUP_COUNT]
-    missing_ids = [gid for gid in candidate_ids if gid not in challenge_peaks]
-
-    if not missing_ids:
-        print(f"No new challenge peak groups found among the latest {CANDIDATE_GROUP_COUNT} "
-              "— everything is already present.")
-        return
-
-    added = []
+    updated = []
     referenced_monster_ids = set()
 
-    for gid in missing_ids:
+    for gid in candidate_ids:
         group = challenge_peak_api[gid]
         display_name = resolve_text(group["name"], textmap_en)
-
-        if not confirm(f"Do you wanna update with {display_name} - {gid}?"):
-            print(f"Skipping {display_name} ({gid}).")
-            continue
 
         challenge_peaks[gid] = {
             "id": group["id"],
@@ -273,10 +260,10 @@ def main():
             "peaks": [build_peak_entry(peak, textmap_en, stages_api) for peak in group["peaks"]],
         }
         referenced_monster_ids |= collect_monster_ids(group)
-        added.append(f"{display_name} ({gid})")
+        updated.append(f"{display_name} ({gid})")
 
-    if not added:
-        print("No challenge peak groups were added.")
+    if not updated:
+        print("No challenge peak groups were updated.")
         return
 
     save_json(CHALLENGE_PEAKS_PATH, challenge_peaks)
@@ -286,7 +273,7 @@ def main():
         download_monster_icons(referenced_monster_ids, monsters_api, monsters_registry)
         save_json(MONSTERS_PATH, monsters_registry)
 
-    print(f"Added {len(added)} challenge peak group(s): {', '.join(added)}")
+    print(f"Updated {len(updated)} challenge peak group(s): {', '.join(updated)}")
 
 
 if __name__ == "__main__":
